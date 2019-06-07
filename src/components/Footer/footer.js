@@ -24,6 +24,8 @@ class Footer extends Component {
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePostedDate = this.onChangePostedDate.bind(this);
         this.onChangeBody = this.onChangeBody.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggleContactForm = this.toggleContactForm.bind(this);
         this.state = {
             modalContactForm: false,
             nickname: '',
@@ -31,8 +33,7 @@ class Footer extends Component {
             postedDate: Date.now(),
             body: ''
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.toggleContactForm = this.toggleContactForm.bind(this);
+
     }
 
     onChangeNickname(e) {
@@ -74,19 +75,19 @@ class Footer extends Component {
         const newContact = {
             nickname: this.state.nickname,
             postedDate: Date.now(),
-            rating : this.state.rating,
+            email : this.state.email,
             body: this.state.body,
 
         };
 
-        axios.post('http://localhost:5000/reviews/add', newContact)
+        axios.post('http://localhost:4000/contact/add', newContact)
             .then(res => console.log(res.data));
 
         this.setState({
             nickname: '',
             postedData: Date.now(),
             body: '',
-            rating: ''
+            email: ''
         })
 
     }
@@ -123,17 +124,30 @@ class Footer extends Component {
                                     <Row>
                                         <Col>
                                             <label htmlFor="username">Username: </label>
-                                            <input id="username" name="username" type="text" />
+                                            <input  type="text"
+                                                    className="form-control"
+                                                    value={this.state.nickname}
+                                                    onChange={this.onChangeNickname}
+                                            />
                                         </Col>
                                         <Col>
                                             <label htmlFor="email">E-mail: </label>
-                                            <input id="email" name="email" type="email" />
+                                            <input  type="email"
+                                                    className="form-control"
+                                                    value={this.state.email}
+                                                    onChange={this.onChangeEmail}
+                                            />
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>
                                             <label htmlFor="message">Message: </label>
-                                            <input id="message" name="message" type="text" /> <br />
+                                            <input  type="text"
+                                                    className="form-control"
+                                                    value={this.state.body}
+                                                    onChange={this.onChangeBody}
+                                            />
+                                            <br />
                                             <button className="btn-outline-primary">Send message</button>
                                         </Col>
                                     </Row>
@@ -149,16 +163,5 @@ class Footer extends Component {
         );
     }
 }
-
-function
-
-stringifyFormData(fd) {
-    const data = {};
-    for (let key of fd.keys()) {
-        data[key] = fd.get(key);
-    }
-    return JSON.stringify(data, null, 2);
-}
-
 
 export default Footer;

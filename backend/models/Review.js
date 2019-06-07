@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-mongoose.set('useCreateIndex', true)
+mongoose.set('useCreateIndex', true);
 
 var reviewSchema = new Schema({
     nickname: {type:String},
@@ -9,5 +9,4 @@ var reviewSchema = new Schema({
     rating: {type: Number}
 });
 
-reviewSchema.index({nickname: 'text'});
 module.exports = mongoose.model('Review', reviewSchema);

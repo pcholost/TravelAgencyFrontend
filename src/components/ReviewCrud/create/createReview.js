@@ -10,6 +10,7 @@ export default class CreateReview extends Component {
         this.onChangeRating = this.onChangeRating.bind(this);
         this.onChangeBody = this.onChangeBody.bind(this);
         this.onChangePostedDate = this.onChangePostedDate.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             nickname: '',
