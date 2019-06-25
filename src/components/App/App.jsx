@@ -1,35 +1,19 @@
 import React, {Component} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    InputGroupAddon,
-    Button,
-    InputGroup,
-    Input
-} from 'reactstrap';
 
 import CrudPanel from "../Crud/crudApp";
 import HomePage from "../Content/adminHomePage";
 import Footer from "../Footer/footer";
 import Login from "../Login/login";
-import Search from "../Filter/Filter";
 import About from "../Content/aboutCompany";
-import ReviewPanel from "../ReviewCrud/reviewApp"
+import ReviewPanel from "../ReviewCrud/reviewApp";
+import Register from "../Register/register";
 
-import logo from "../../img/logo.png"
+//import { Provider } from "react-redux";
+//import store from "../Store/store";
 
-const navBarStyle = {
-    background: "rgba(0, 0, 102, 0.7)",
-    marginBottom: "50px"
-};
-
-
+import logo from "../../img/logo.png";
 
 class App extends Component{
     render(){
@@ -49,16 +33,15 @@ class App extends Component{
                                 <Link to="/travel" className="nav-link">Offer Database</Link>
                             </li>
                             <li className="navbar-item">
-                                <Link to="/search" className="nav-link">Search</Link>
+                                <Link to="/review" className="nav-link">Reviews</Link>
                             </li>
-                            <li className="navbar-item">
-                                <Link to="/login" className="nav-link">Login</Link>
-                            </li>
+                        </ul>
+                        <ul className="navbar-nav ml-auto">
                             <li className="navbar-item">
                                 <Link to="/about" className="nav-link">About</Link>
                             </li>
                             <li className="navbar-item">
-                                <Link to="/review" className="nav-link">Reviews</Link>
+                                <Link to="/login" className="nav-link">Login</Link>
                             </li>
                         </ul>
                     </div>
@@ -67,9 +50,9 @@ class App extends Component{
                 <Route path="/" exact component={HomePage}/>
                 <Route path="/travel" component={CrudPanel}/>
                 <Route path="/login" component={Login}/>
-                <Route path="/search" component={Search}/>
                 <Route path="/about" component={About}/>
                 <Route path="/review" component={ReviewPanel}/>
+                <Route path="/register" component={Register}/>
                 <Footer/>
             </div>
             </Router>

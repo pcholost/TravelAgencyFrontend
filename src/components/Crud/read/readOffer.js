@@ -23,8 +23,15 @@ export default class OffersList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {offers: []};
+        this.state = {
+            search:'',
+            offers: []};
     }
+
+    updateSearch(e){
+        this.setState({search:e.target.value.substr(0,20)});
+    }
+
 
     componentDidMount() {
         axios.get('http://localhost:4000/offers/')
@@ -36,16 +43,24 @@ export default class OffersList extends Component {
             })
     }
 
-    offerList() {
-        return this.state.offers.map(function(currentOffer, i){
+    filteredList(){
+        return this.state.offers.filter(
+            (filt)=>
+                filt.offerName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        ).map(function(currentOffer, i){
             return <Offers offer={currentOffer} key={i} />;
         })
     }
 
     render() {
+        let filteredOffers = this.props.Offers;
         return (
             <div>
                 <h3>Offer List</h3>
+                <input type="text"
+                       value={this.state.search}
+                       onChange={this.updateSearch.bind(this)}
+                       placeholder={'Search by Offer name'}/>
                 <table className="table table-striped" style={{ marginTop: 20 }} >
                     <thead>
                     <tr>
@@ -59,7 +74,7 @@ export default class OffersList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    { this.offerList() }
+                    {this.filteredList()}
                     </tbody>
                 </table>
             </div>

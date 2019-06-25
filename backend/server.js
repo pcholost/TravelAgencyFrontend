@@ -7,11 +7,19 @@ const PORT = 4000;
 const offerRoutes = express.Router();
 const contactRoutes = express.Router();
 
+const passport = require("passport");
+
 const config = require('../config/config');
 let Offer = require('./models/Offer');
 let Contact = require('./models/Contact');
 
+const users = require("./users");
 app.use(cors());
+app.use(
+    bodyParser.urlencoded({
+        extended: false
+    })
+);
 app.use(bodyParser.json());
 
 
@@ -98,6 +106,19 @@ contactRoutes.route('/add').post(function(req, res) {
         });
 });
 app.use('/contact', contactRoutes);
+
+// Passport middleware
+app.use(passport.initialize());
+// Passport config
+require("./services/passport")(passport);
+
+// Log/Register
+app.use("/api/users", users);
+
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
+
+
+
+
