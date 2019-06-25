@@ -56,7 +56,7 @@ offerRoutes.route('/update/:id').post(function(req, res) {
         if (!offer)
             res.status(404).send("data is not found");
         else
-        offer.offerName = req.body.offerName;
+            offer.offerName = req.body.offerName;
         offer.countryName = req.body.countryName;
         offer.startDate = req.body.startDate;
         offer.endDate = req.body.endDate;
@@ -118,7 +118,3 @@ app.use("/api/users", users);
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
-
-
-
-

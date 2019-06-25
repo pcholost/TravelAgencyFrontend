@@ -53,7 +53,6 @@ export default class OffersList extends Component {
     }
 
     render() {
-        let filteredOffers = this.props.Offers;
         return (
             <div>
                 <h3>Offer List</h3>

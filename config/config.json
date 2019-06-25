@@ -1,0 +1,7 @@
+{
+  "mongoURI": "mongodb://user:user1234@ds063779.mlab.com:63779/travelagencydb",
+  "apiKey": "bq75JD82NH4aqdkYQn3FrZAhybhoLVMo",
+  "client_id":"848021191752-8ju924asmv0p1pq03s3cbpa4no37rcvq.apps.googleusercontent.com",
+  "client_secret":"pUHPSJdU_lzgDayiofLaQxoF",
+  "cookieSession":"travelAG"
+}
