@@ -18,6 +18,7 @@ import ReviewPanel from "../ReviewCrud/reviewApp";
 import Register from "../Register/register";
 import PrivateRoute from "../PrivateRoute/privateRoute";
 import Dashboard from "../Dashboard/dashboard";
+import Contact from "../Contact/contactRoute";
 
 import logo from "../../img/logo.png";
 
@@ -67,6 +68,9 @@ class App extends Component{
                                 <Link to="/about" className="nav-link">About</Link>
                             </li>
                             <li className="navbar-item">
+                                <Link to="/contact" className="nav-link">Messages</Link>
+                            </li>
+                            <li className="navbar-item">
                                 <Link to="/login" className="nav-link">Login</Link>
                             </li>
                         </ul>
@@ -74,11 +78,12 @@ class App extends Component{
                 </nav>
                 <br/>
                 <Route path="/" exact component={HomePage}/>
-                <PrivateRoute path="/travel" component={CrudPanel}/>
+                <Route path="/travel" component={CrudPanel}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/about" component={About}/>
                 <Route path="/review" component={ReviewPanel}/>
                 <Route path="/register" component={Register}/>
+                <PrivateRoute path="/contact" component={Contact}/>
                 <Switch>
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 </Switch>

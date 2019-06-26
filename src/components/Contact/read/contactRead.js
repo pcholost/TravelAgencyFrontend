@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 
-const Reviews = props => (
+const ContactRead = props => (
     <tr>
-        <td>{props.review.nickname}</td>
-        <td>{props.review.postedDate}</td>
-        <td>{props.review.body}</td>
-        <td>{props.review.rating}</td>
+        <td>{props.contact.nickname}</td>
+        <td>{props.contact.email}</td>
+        <td>{props.contact.postedDate}</td>
+        <td>{props.contact.body}</td>
 
         <td>
-            <Link to={"review/delete/"+props.review._id}>Delete </Link>
+            <Link to={"contact/delete/"+props.contact._id}>Delete </Link>
         </td>
     </tr>
 )
 
-class reviewsRead extends Component{
+class contact extends Component{
     constructor(props) {
         super(props);
-        this.state = {reviews: []};
+        this.state = {contacts: []};
         this.handleChange=this.handleChange.bind(this);
     }
 
@@ -27,36 +27,36 @@ class reviewsRead extends Component{
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/reviews/')
+        axios.get('http://localhost:4000/contact/')
             .then(response => {
-                this.setState({ reviews: response.data });
+                this.setState({ contacts: response.data });
             })
             .catch(function (error){
                 console.log(error);
             })
     }
 
-    reviewList() {
-        return this.state.reviews.map(function(currentReview, i){
-            return <Reviews review={currentReview} key={i} />;
+    messageList() {
+        return this.state.contacts.map(function(currentMessage, i){
+            return <ContactRead contact={currentMessage} key={i} />;
         })
     }
 
     render() {
         return (
             <div>
-                <h3>Reviews </h3>
+                <h3>MailBox </h3>
                 <table className="table table-bordered" style={{ marginTop: 20 }} >
                     <thead>
                     <tr>
                         <th>Nickname</th>
-                        <th>Date</th>
-                        <th>Opinion</th>
-                        <th>Rating [1-5]</th>
+                        <th>Email</th>
+                        <th>Data</th>
+                        <th>Message</th>
                     </tr>
                     </thead>
                     <tbody>
-                    { this.reviewList() }
+                    { this.messageList() }
                     </tbody>
                 </table>
             </div>
@@ -64,4 +64,4 @@ class reviewsRead extends Component{
     }
 
 }
-export default reviewsRead;
+export default contact;

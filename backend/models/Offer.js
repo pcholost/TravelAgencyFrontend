@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+mongoose.set('useCreateIndex', true);
 
 var OfferSchema = new Schema({
-    offerName : {type: String, required: true, max: 100},
-    countryName : {type: String, required: true, max: 100},
-    startDate : {type: String},
-    endDate: {type: String},
-    numberPeople : {type: Number, required: true},
-    cost : {type: Number, required: true},
+    offerName : {type: String},
+    countryName : {type: String},
+    startDate : {type: Date},
+    endDate: {type: Date},
+    numberPeople : {type: Number},
+    cost : {type: Number},
     availability: {type: String, required: true}
 });
 

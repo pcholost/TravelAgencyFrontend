@@ -14,6 +14,7 @@ let Offer = require('./models/Offer');
 let Contact = require('./models/Contact');
 
 const users = require("./users");
+
 app.use(cors());
 app.use(
     bodyParser.urlencoded({
@@ -104,6 +105,30 @@ contactRoutes.route('/add').post(function(req, res) {
         .catch(err => {
             res.status(400).send('Fail with adding');
         });
+});
+
+contactRoutes.route('/').get(function(req, res) {
+    Contact.find(function(err, contacts) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(contacts);
+        }
+    });
+});
+
+contactRoutes.route('/delete/:id').delete(function(req,res){
+    Contact.findByIdAndRemove(req.params.id, function (err) {
+        if (err) return (err);
+        res.send('Deleted successfully!');
+    })
+});
+
+contactRoutes.route('/:id').get(function(req, res) {
+    let id = req.params.id;
+    Contact.findById(id, function(err, offer) {
+        res.json(offer);
+    });
 });
 app.use('/contact', contactRoutes);
 

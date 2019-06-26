@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { FormErrors } from '../../Error/formErrors';
 
 export default class CreateOffer extends Component {
 
@@ -22,9 +23,22 @@ export default class CreateOffer extends Component {
             endDate: '',
             numberPeople: '',
             cost: '',
-            availability: ''
+            availability: '',
+
+            formErrors: {offerName: '', countryName: '', numberPeople: '', cost: ''},
+            offerNameValid: false,
+            countryNameValid: false,
+            numberPeopleValid: false,
+            costValid: false,
+            formValid: false
         }
     }
+    handleUserInput = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]: value},
+            () => { this.validateField(name, value) });
+    };
     onChangeOfferName(e) {
         this.setState({
             offerName: e.target.value
@@ -102,42 +116,91 @@ export default class CreateOffer extends Component {
             cost: '',
             availability: ''
         })
-
     }
+
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let offerNameValid = this.state.offerNameValid;
+        let countryNameValid = this.state.countryNameValid;
+        let numberPeopleValid = this.state.numberPeopleValid;
+        let costValid = this.state.costValid;
+
+        switch(fieldName) {
+            case 'offerName':
+                offerNameValid = value.length >= 7;
+                fieldValidationErrors.offerName = offerNameValid ? '' : ': must be above 7 characters';
+                break;
+            case 'countryName':
+                countryNameValid = value.length >= 3;
+                fieldValidationErrors.countryName = countryNameValid ? '': ': is too short';
+                break;
+            case 'numberPeople':
+                numberPeopleValid = value >= 1 && value<=25;
+                fieldValidationErrors.numberPeople = numberPeopleValid ? '': ': must be between 1 to 25';
+                break;
+            case 'cost':
+                costValid = value >= 1 && value<=50000;
+                fieldValidationErrors.cost = costValid ? '': ': must be between 1 to 50000';
+                break;
+            default:
+                break;
+        }
+        this.setState({formErrors: fieldValidationErrors,
+            offerNameValid: offerNameValid,
+            countryNameValid: countryNameValid,
+            numberPeopleValid: numberPeopleValid,
+            costValid: costValid
+        }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({formValid: this.state.offerNameValid && this.state.countryNameValid && this.state.numberPeopleValid && this.state.costValid});
+    }
+
+    errorClass(error) {
+        return(error.length === 0 ? '' : 'has-error');
+    }
+
 
     render() {
         return (
             <div style={{marginTop: 10}}>
                 <h3>Create New Offer</h3>
+                <div className="panel panel-default">
+                    <FormErrors formErrors={this.state.formErrors} />
+                </div>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
+                    <div className={`"form-group" ${this.errorClass(this.state.formErrors.offerName)}`}>
                         <label>Name of Offer: </label>
                         <input  type="text"
                                 className="form-control"
+                                name="offerName"
                                 value={this.state.offerName}
-                                onChange={this.onChangeOfferName}
+                                onChange={this.handleUserInput}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className={`form-group ${this.errorClass(this.state.formErrors.countryName)}`}>
                         <label>Name of Country: </label>
                         <input  type="text"
                                 className="form-control"
+                                name="countryName"
                                 value={this.state.countryName}
-                                onChange={this.onChangeCountryName}
+                                onChange={this.handleUserInput}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className={`form-group ${this.errorClass(this.state.formErrors.cost)}`}>
                         <label>Cost [PLN]: </label>
                         <input
                             type="text"
                             className="form-control"
+                            name="cost"
                             value={this.state.cost}
-                            onChange={this.onChangeCost}
+                            onChange={this.handleUserInput}
                         />
                     </div>
                     <div className="form-group">
                         <label>Start Date: </label>
-                        <input  type="text"
+                        <input  type="Date"
                                 className="form-control"
                                 value={this.state.startDate}
                                 onChange={this.onChangeStartDate}
@@ -145,18 +208,19 @@ export default class CreateOffer extends Component {
                     </div>
                     <div className="form-group">
                         <label>End Date: </label>
-                        <input  type="text"
+                        <input  type="Date"
                                 className="form-control"
                                 value={this.state.endDate}
                                 onChange={this.onChangeEndDate}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className={`form-group ${this.errorClass(this.state.formErrors.numberPeople)}`}>
                         <label>Number of People: </label>
                         <input  type="text"
                                 className="form-control"
+                                name="numberPeople"
                                 value={this.state.numberPeople}
-                                onChange={this.onChangeNumberPeople}
+                                onChange={this.handleUserInput}
                         />
                     </div>
                     <div className="form-group">
@@ -187,7 +251,7 @@ export default class CreateOffer extends Component {
                     </div>
 
                     <div className="form-group">
-                        <input type="submit" value="Create Offer" className="btn btn-primary" />
+                        <input type="submit" value="Create Offer" className="btn btn-primary" disabled={!this.state.formValid}/>
                     </div>
                 </form>
             </div>

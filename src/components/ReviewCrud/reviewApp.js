@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import CreateReview from "./create/createReview";
 import ReadReview from "./read/readReview";
 import DeleteReview from "./delete/deleteReview";
+import PrivateRoute from "../PrivateRoute/privateRoute";
 
 class App extends Component {
     render() {
@@ -26,7 +27,7 @@ class App extends Component {
                     <br/>
                     <Route path="/review" exact component={ReadReview} />
                     <Route path="/review/create" component={CreateReview} />
-                    <Route path="/review/delete/:id" component={DeleteReview} />
+                    <PrivateRoute path="/review/delete/:id" component={DeleteReview} />
                 </div>
             </Router>
         );

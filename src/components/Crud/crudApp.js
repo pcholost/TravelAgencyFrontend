@@ -7,8 +7,9 @@ import CreateOffer from "./create/createOffer";
 import UpdateOffer from "./update/updateOffer";
 import ReadOffer from "./read/readOffer";
 import DeleteOffer from "./delete/deleteOffer";
+import PrivateRoute from "../PrivateRoute/privateRoute";
 
-class App extends Component {
+class Crud extends Component {
     render() {
         return (
             <Router>
@@ -26,13 +27,13 @@ class App extends Component {
                     </nav>
                     <br/>
                     <Route path="/travel" exact component={ReadOffer} />
-                    <Route path="/travel/update/:id" component={UpdateOffer} />
-                    <Route path="/travel/create" component={CreateOffer} />
-                    <Route path="/travel/delete/:id" component={DeleteOffer} />
+                    <PrivateRoute path="/travel/update/:id" component={UpdateOffer} />
+                    <PrivateRoute path="/travel/create" component={CreateOffer} />
+                    <PrivateRoute path="/travel/delete/:id" component={DeleteOffer} />
                 </div>
             </Router>
         );
     }
 }
 
-export default App;
+export default Crud;
